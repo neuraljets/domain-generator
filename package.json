@@ -1,0 +1,34 @@
+{
+  "name": "domain-generator",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [],
+  "scripts": {
+    "build": "tsc",
+    "compile": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.6",
+    "gts": "^6.0.2",
+    "typescript": "~5.7.3"
+  },
+  "dependencies": {
+    "whoisit": "^0.0.5"
+  },
+  "engines": {
+    "node": ">=23.6.0"
+  }
+}
