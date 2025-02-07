@@ -6,7 +6,7 @@ export interface GenerateDomainsParams {
   numDomains: number;
 }
 export async function generateDomains(
-  params: GenerateDomainsParams
+  params: GenerateDomainsParams,
 ): Promise<string[]> {
   if (params.numDomains <= 0) {
     return [];
@@ -16,7 +16,7 @@ export async function generateDomains(
     throw new Error(
       `Cannot generate more than ${
         domainPrefixes.length + domainSuffixes.length
-      } domains -- not enough prefixes and suffixes`
+      } domains -- not enough prefixes and suffixes`,
     );
   }
 
@@ -25,7 +25,7 @@ export async function generateDomains(
     ...domainPrefixes.map(prefix => `${prefix}${params.root}.com`),
     ...domainSuffixes.map(suffix => `${params.root}${suffix}.com`),
     ...domainPrefixes.flatMap(prefix =>
-      domainSuffixes.map(suffix => `${prefix}${params.root}${suffix}.com`)
+      domainSuffixes.map(suffix => `${prefix}${params.root}${suffix}.com`),
     ),
   ];
 
