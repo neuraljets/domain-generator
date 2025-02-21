@@ -4,28 +4,37 @@ import { domainPrefixes, domainSuffixes } from "./prefixesAndSuffixes";
 export interface GenerateDomainsParams {
   root: string;
   numDomains: number;
+  // Optional: Custom prefixes and suffixes
+  prefixes?: string[];
+  suffixes?: string[];
 }
 export async function generateDomains(
   params: GenerateDomainsParams,
 ): Promise<string[]> {
+  const prefixes = params.prefixes ?? domainPrefixes;
+  const suffixes = params.suffixes ?? domainSuffixes;
+
   if (params.numDomains <= 0) {
     return [];
   }
 
-  if (params.numDomains > domainPrefixes.length + domainSuffixes.length) {
+  const totalDomainCombinations =
+    prefixes.length + suffixes.length + prefixes.length * suffixes.length;
+
+  if (params.numDomains > totalDomainCombinations) {
     throw new Error(
       `Cannot generate more than ${
-        domainPrefixes.length + domainSuffixes.length
+        totalDomainCombinations
       } domains -- not enough prefixes and suffixes`,
     );
   }
 
   // Generate all possible domains
   const allDomains = [
-    ...domainPrefixes.map(prefix => `${prefix}${params.root}.com`),
-    ...domainSuffixes.map(suffix => `${params.root}${suffix}.com`),
-    ...domainPrefixes.flatMap(prefix =>
-      domainSuffixes.map(suffix => `${prefix}${params.root}${suffix}.com`),
+    ...prefixes.map(prefix => `${prefix}${params.root}.com`),
+    ...suffixes.map(suffix => `${params.root}${suffix}.com`),
+    ...prefixes.flatMap(prefix =>
+      suffixes.map(suffix => `${prefix}${params.root}${suffix}.com`),
     ),
   ];
 
